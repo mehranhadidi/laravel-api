@@ -35,4 +35,14 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+
+    /**
+     * Get user avatar
+     *
+     * @return string
+     */
+    public function avatar()
+    {
+        return 'https://gravatar.com/avatar/'. md5($this->email) .'?s=45&d=mm';
+    }
 }
