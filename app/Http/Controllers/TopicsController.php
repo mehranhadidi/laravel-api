@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTopicRequest;
-use App\Post;
 use App\Topic;
+use App\Post;
+use App\Http\Requests\StoreTopicRequest;
 use App\Transformers\TopicTransformer;
 use Illuminate\Http\Request;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class TopicsController extends Controller
 {
@@ -17,7 +18,18 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        //
+        // fetch topics
+        $topics = Topic::latestFirst()->paginate(3);
+
+        // create a collection from it
+        $topicsCollection = $topics->getCollection();
+
+        return fractal()
+            ->collection($topicsCollection) // transform only topics collection
+            ->parseIncludes(['user'])
+            ->transformWith(new TopicTransformer)
+            ->paginateWith(new IlluminatePaginatorAdapter($topics)) // paginate the query result based on laravel pagination meta data
+            ->toArray();
     }
 
     /**
