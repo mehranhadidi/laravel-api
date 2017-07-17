@@ -11,5 +11,5 @@ Route::post('register', 'RegisterController@register');
 
 /* Protected Routes */
 Route::middleware('auth:api')->group(function () {
-
+    Route::resource('topics', 'TopicsController');
 });

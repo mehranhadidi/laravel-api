@@ -45,4 +45,14 @@ class User extends Authenticatable
     {
         return 'https://gravatar.com/avatar/'. md5($this->email) .'?s=45&d=mm';
     }
+
+    /**
+     * Collection of user topics
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function topic()
+    {
+        return $this->hasMany(Topic::class);
+    }
 }
