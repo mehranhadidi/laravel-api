@@ -56,6 +56,12 @@ class User extends Authenticatable
         return $this->hasMany(Topic::class);
     }
 
+    /**
+     * This method will return true only if user owns topic
+     *
+     * @param Topic $topic
+     * @return bool
+     */
     public function ownsTopic(Topic $topic)
     {
         return $this->id === $topic->user->id;
