@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\StoreTopicRequest;
 use App\Post;
 use App\Topic;
 use App\Transformers\PostTransformer;
@@ -55,13 +56,18 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param StorePostRequest $request
+     * @param Topic $topic
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePostRequest $request, Topic $topic, Post $post)
     {
-        //
+        // Authorize user
+        $this->authorize('update', $post);
+
+        $post->body = $request->get('body', $post->body);
+        $post->save();
     }
 
     /**
