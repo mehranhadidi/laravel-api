@@ -33,16 +33,6 @@ class TopicsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param StoreTopicRequest $request
@@ -73,35 +63,32 @@ class TopicsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Topic $topic
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Topic $topic)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return fractal()
+            ->item($topic)
+            ->parseIncludes(['user', 'posts', 'posts.user'])
+            ->transformWith(new TopicTransformer)
+            ->toArray();
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param StoreTopicRequest $request
+     * @param Topic $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreTopicRequest $request, Topic $topic)
     {
-        //
+        // Authorize user before update
+        $this->authorize('update', $topic);
+
+        $topic->title = $request->get('title', $topic->title);
+        $topic->save();
     }
 
     /**
