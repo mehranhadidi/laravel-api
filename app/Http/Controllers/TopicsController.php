@@ -84,7 +84,7 @@ class TopicsController extends Controller
      */
     public function update(StoreTopicRequest $request, Topic $topic)
     {
-        // Authorize user before update
+        // Authorize user
         $this->authorize('update', $topic);
 
         $topic->title = $request->get('title', $topic->title);
@@ -94,11 +94,17 @@ class TopicsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Topic $topic
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function destroy(Topic $topic)
     {
-        //
+        // Authorize user
+        $this->authorize('destroy', $topic);
+
+        $topic->delete();
+
+        return response(null, 204);
     }
 }

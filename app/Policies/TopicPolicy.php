@@ -21,4 +21,16 @@ class TopicPolicy
     {
         return $user->ownsTopic($topic);
     }
+
+    /**
+     * Destroy topic
+     *
+     * @param User $user
+     * @param Topic $topic
+     * @return bool
+     */
+    public function destroy(User $user, Topic $topic)
+    {
+        return $user->ownsTopic($topic);
+    }
 }
