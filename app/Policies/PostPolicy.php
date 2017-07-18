@@ -21,4 +21,16 @@ class PostPolicy
     {
         return $user->ownsPost($post);
     }
+
+    /**
+     * Destroy policy
+     *
+     * @param User $user
+     * @param Post $post
+     * @return bool
+     */
+    public function destroy(User $user, Post $post)
+    {
+        return $user->ownsPost($post);
+    }
 }

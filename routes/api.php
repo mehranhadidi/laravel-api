@@ -18,6 +18,6 @@ Route::middleware('auth:api')->group(function () {
 
     // Posts
     Route::resource('topics.posts', 'PostsController', ['except'=> [
-        'create', 'edit'
+        'create', 'edit', 'index'
     ]]);
 });

@@ -63,7 +63,6 @@ class PostsController extends Controller
      */
     public function update(StorePostRequest $request, Topic $topic, Post $post)
     {
-        // Authorize user
         $this->authorize('update', $post);
 
         $post->body = $request->get('body', $post->body);
@@ -73,11 +72,16 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Topic $topic
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Topic $topic, Post $post)
     {
-        //
+        $this->authorize('destroy', $post);
+
+        $post->delete();
+
+        return response('done', 204);
     }
 }
