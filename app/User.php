@@ -77,4 +77,15 @@ class User extends Authenticatable
     {
         return $this->id === $post->user->id;
     }
+
+    /**
+     * Check if this user liked a specific post or not
+     *
+     * @param Post $post
+     * @return bool
+     */
+    public function hasLikedPost(Post $post)
+    {
+        return $post->likes->where('user_id', $this->id)->count() === 1;
+    }
 }

@@ -33,4 +33,16 @@ class PostPolicy
     {
         return $user->ownsPost($post);
     }
+
+    /**
+     * Users cannot like their own posts, They only can like someone else posts
+     *
+     * @param User $user
+     * @param Post $post
+     * @return bool
+     */
+    public function like(User $user, Post $post)
+    {
+        return ! $user->ownsPost($post);
+    }
 }

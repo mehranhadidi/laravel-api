@@ -20,4 +20,10 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('topics.posts', 'PostsController', ['except'=> [
         'create', 'edit', 'index'
     ]]);
+
+    // Post Likes
+    Route::group(['prefix' => 'topics/{topic}/posts/{post}/likes'], function () {
+        Route::post('/', 'PostLikesController@store');
+        Route::delete('/{like}', 'PostLikesController@destroy');
+    });
 });
